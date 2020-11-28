@@ -3,7 +3,8 @@ import Home from './HomeComponent';
 import Directory from './DirectoryComponent';
 import CampsiteInfo from './CampsiteInfoComponent';
 import About from './AboutComponent';
-import Contact from './ContactComponent'
+import Contact from './ContactComponent';
+import Reservation from './ReservationComponent';
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
@@ -121,30 +122,32 @@ const MainNavigator = createDrawerNavigator(
     {    
         Home: { 
             screen: HomeNavigator,
-            navigationOptions: ({tintColor}) => (
+            navigationOptions: {
+                drawerIcon: ({tintColor}) => (
                     <Icon 
                         name='home'
                         type='font-awesome'
                         size={24}
                         color={tintColor}
                     />
-
                 )
+            }
         },
-        Directory: { 
+        Directory: {
             screen: DirectoryNavigator,
-            navigationOptions: ({tintColor}) => (
-                <Icon 
-                    name='home'
-                    type='font-awesome'
-                    size={24}
-                    color={tintColor}
-                />
-
-            ) 
+            navigationOptions: {
+                drawerIcon: ({tintColor}) => (
+                    <Icon
+                        name='list'
+                        type='font-awesome'
+                        size={24}
+                        color={tintColor}
+                    />
+                )
+            }
         },
-        About: { 
-            screen: AboutUsNavigator,
+        About: {
+            screen: AboutUsNavigator ,
             navigationOptions: {
                 drawerLabel: 'About Us',
                 drawerIcon: ({tintColor}) => (
@@ -157,21 +160,20 @@ const MainNavigator = createDrawerNavigator(
                 )
             }
         },
-        Contact: { 
+        Contact: {
             screen: ContactUsNavigator,
             navigationOptions: {
                 drawerLabel: 'Contact Us',
                 drawerIcon: ({tintColor}) => (
-                    <Icon 
-                        name='address-card'
+                    <Icon
+                        name='info-circle'
                         type='font-awesome'
                         size={24}
                         color={tintColor}
                     />
-    
                 )
             }
-        }
+        },
     },
     {
         drawerBackgroundColor: '#CEC8FF',
@@ -209,7 +211,7 @@ const styles = StyleSheet.create({
     }
 })
 
-const CustomDrawerContentComponent = ()=> (
+const CustomDrawerContentComponent = (props)=> (
     <ScrollView>
         <SafeAreaView 
             style={styles.container}
