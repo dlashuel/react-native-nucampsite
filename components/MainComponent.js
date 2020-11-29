@@ -5,7 +5,7 @@ import CampsiteInfo from './CampsiteInfoComponent';
 import About from './AboutComponent';
 import Contact from './ContactComponent';
 import Reservation from './ReservationComponent';
-import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
+import { View, Platform, StyleSheet, Text, ScrollView, Image, Button } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 import { createAppContainer } from 'react-navigation';
@@ -118,6 +118,47 @@ const ContactUsNavigator = createStackNavigator(
     }
 );
 
+const ReservationNavigator = createStackNavigator(
+    {
+        Reservation: { screen: Reservation }
+    },
+    {
+        defaultNavigationOptions: ({navigation})=>({
+            headerStyle: {
+                backgroundColor: '#5637DD'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            },
+            headerLeft: <Icon
+                name='tree'
+                type= 'font-awesome'
+                iconStyle={styles.stackIcons}
+                onPress={()=> navigation.toggleDrawer()}
+            />
+        })
+    }
+);
+
+const CustomDrawerContentComponent = (props)=> (
+    <ScrollView>
+        <SafeAreaView 
+            style={styles.container}
+            forceInset={{top: 'always', horizontal: 'never'}}>
+            <View style={styles.drawerHeader}>
+                <View style={{flex: 1}}>
+                    <Image source={require('./images/logo.png')} style={styles.drawerImage} />
+                </View>
+                <View style={{flex: 2}}>
+                    <Text style={styles.drawerHeaderText}>NuCamp</Text>
+                </View>
+            </View>
+            <DrawerItems {...props} />
+        </SafeAreaView>
+    </ScrollView>
+);
+
 const MainNavigator = createDrawerNavigator(
     {    
         Home: { 
@@ -139,6 +180,20 @@ const MainNavigator = createDrawerNavigator(
                 drawerIcon: ({tintColor}) => (
                     <Icon
                         name='list'
+                        type='font-awesome'
+                        size={24}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
+        Reservation: {
+            screen: ReservationNavigator,
+            navigationOptions: {
+                drawerLabel: 'Reserve Campsite',
+                drawerIcon: ({tintColor}) => (
+                    <Icon
+                        name='tree'
                         type='font-awesome'
                         size={24}
                         color={tintColor}
@@ -211,23 +266,7 @@ const styles = StyleSheet.create({
     }
 })
 
-const CustomDrawerContentComponent = (props)=> (
-    <ScrollView>
-        <SafeAreaView 
-            style={styles.container}
-            forceInset={{top: 'always', horizontal: 'never'}}>
-            <View style={styles.drawerHeader}>
-                <View style={{flex: 1}}>
-                    <Image source={require('./images/logo.png')} style={styles.drawerImage} />
-                </View>
-                <View style={{flex: 2}}>
-                    <Text style={styles.drawerHeaderText}>NuCamp</Text>
-                </View>
-            </View>
-            <DrawerItems {...props} />
-        </SafeAreaView>
-    </ScrollView>
-);
+
 
 class Main extends Component {
     componentDidMount() {
